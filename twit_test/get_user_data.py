@@ -36,14 +36,15 @@ def get_tweets_from_user(username):
 
 def get_homeline_tweets(username):
 	friends = get_friends(username)
-	for u in friends:
-		try:
-			tweet = get_tweets_from_user(u.screen_name)
-			print(tweet)
-			time.sleep(2)
-		except tweepy.TweepError:
-			time.sleep(2)
-			continue
+	with open('tweets.json', 'a') as tweet_file:
+		for u in friends:
+			try:
+				tweet = get_tweets_from_user(u.screen_name)
+				tweet_file.write(str(tweet))
+				time.sleep(2)
+			except tweepy.TweepError:
+				time.sleep(2)
+				continue
 
 
 get_homeline_tweets("AarshPatel")
